@@ -1,0 +1,114 @@
+[
+  {
+    "type": "Wolf",
+    "weight": "50",
+    "maxCount": "30",
+    "step": "3",
+    "satiety": "8"
+  },
+  {
+    "type": "Boa",
+    "weight": "15",
+    "maxCount": "30",
+    "step": "1",
+    "satiety": "3"
+  },
+  {
+    "type": "Fox",
+    "weight": "8",
+    "maxCount": "30",
+    "step": "2",
+    "satiety": "2"
+  },
+  {
+    "type": "Bear",
+    "weight": "500",
+    "maxCount": "5",
+    "step": "2",
+    "satiety": "80"
+  },
+  {
+    "type": "Eagle",
+    "weight": "6",
+    "maxCount": "20",
+    "step": "3",
+    "satiety": "1"
+  },
+  {
+    "type": "Horse",
+    "weight": "400",
+    "maxCount": "20",
+    "step": "4",
+    "satiety": "60"
+  },
+  {
+    "type": "Deer",
+    "weight": "300",
+    "maxCount": "20",
+    "step": "4",
+    "satiety": "50"
+  },
+  {
+    "type": "Rabbit",
+    "weight": "2",
+    "maxCount": "150",
+    "step": "2",
+    "satiety": "0.45"
+  },
+  {
+    "type": "Mouse",
+    "weight": "0.05",
+    "maxCount": "500",
+    "step": "1",
+    "satiety": "0.01"
+  },
+  {
+    "type": "Goat",
+    "weight": "60",
+    "maxCount": "140",
+    "step": "3",
+    "satiety": "10"
+  },
+  {
+    "type": "Sheep",
+    "weight": "70",
+    "maxCount": "140",
+    "step": "3",
+    "satiety": "15"
+  },
+  {
+    "type": "Boar",
+    "weight": "400",
+    "maxCount": "50",
+    "step": "2",
+    "satiety": "50"
+  },
+  {
+    "type": "Buffalo",
+    "weight": "700",
+    "maxCount": "10",
+    "step": "3",
+    "satiety": "100"
+  },
+  {
+    "type": "Duck",
+    "weight": "1",
+    "maxCount": "200",
+    "step": "4",
+    "satiety": "0.15"
+  },
+  {
+    "type": "Caterpillar",
+    "weight": "0.01",
+    "maxCount": "1000",
+    "step": "0",
+    "satiety": "0"
+  },
+  {
+    "type": "Plants",
+    "weight": "1",
+    "maxCount": "200",
+    "step": "0",
+    "satiety": "0"
+  }
+]
