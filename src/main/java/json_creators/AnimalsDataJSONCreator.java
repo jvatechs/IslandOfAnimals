@@ -23,7 +23,6 @@ public class AnimalsDataJSONCreator {
         //serialize #1
         ObjectMapper mapper = new ObjectMapper();
         String pathname = "src/main/java/json_creators/animaldata.json";
-
         JavaType plType = mapper.getTypeFactory().constructCollectionLikeType(List.class, Animal.class);
 
         //serialize #2
