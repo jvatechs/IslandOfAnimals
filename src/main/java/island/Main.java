@@ -4,7 +4,6 @@ import entities.Animal;
 import populators.AnimalPopulator;
 import populators.AnimalsListCreator;
 import populators.PlantPopulator;
-import readers.CreateOwnJson;
 import readers.DeserializeAnimalsInfo;
 
 
