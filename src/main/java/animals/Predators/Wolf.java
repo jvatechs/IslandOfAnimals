@@ -1,15 +1,12 @@
 package animals.Predators;
 
-import animals.Predator;
-
-class Wolf extends Predator {
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import entities.Predator;
 
 
-    @Override
-    public void directionChoose() {
+public class Wolf extends Predator {
 
-    }
+
 }
 
 
