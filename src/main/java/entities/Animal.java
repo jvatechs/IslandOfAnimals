@@ -24,6 +24,8 @@ public abstract class Animal extends Entity{
     protected Location location;
     private List<Animal> animals;
 
+    protected boolean isPredator = false;
+
 //    public Animal() {
 //        this.typeName = this.getClass().getName();
 //    }
@@ -70,6 +72,17 @@ public abstract class Animal extends Entity{
     public void moveLeft() {
         int x = location.getX();
         location.setX(Math.max(x - step, 0));
+    }
+
+//    protected abstract void isPredatorOrHerbivore();
+
+
+    public boolean isPredator() {
+        return isPredator;
+    }
+
+    public void setPredator(boolean predator) {
+        isPredator = predator;
     }
 
     public double getMaxWeight() {

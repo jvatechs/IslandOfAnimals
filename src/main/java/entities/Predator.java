@@ -9,10 +9,16 @@ package entities;
 //         this.satiety = satiety;
 //     }
 
+     public Predator() {
+         isPredator = true;
+     }
+
      @Override
      public void eat(Object o) {
 
      }
+
+
 
 
 //     @Override

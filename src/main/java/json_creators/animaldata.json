@@ -1,0 +1,106 @@
+[ {
+  "@class" : "animals.Predators.Wolf",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : true
+}, {
+  "@class" : "animals.Predators.Fox",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : true
+}, {
+  "@class" : "animals.Predators.Eagle",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : true
+}, {
+  "@class" : "animals.Predators.Boa",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : true
+}, {
+  "@class" : "animals.Predators.Bear",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : true
+}, {
+  "@class" : "animals.Herbivores.Boar",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Buffalo",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Caterpillar",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Deer",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Duck",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Goat",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Horse",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Mouse",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Rabbit",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+}, {
+  "@class" : "animals.Herbivores.Sheep",
+  "maxWeight" : 0.0,
+  "maxCount" : 0,
+  "step" : 0,
+  "satiety" : 0,
+  "predator" : false
+} ]
