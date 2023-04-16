@@ -5,6 +5,7 @@ import populators.AnimalPopulator;
 import populators.AnimalsListCreator;
 import populators.PlantPopulator;
 import readers.DeserializeAnimalsInfo;
+import readers.DeserializeProbability;
 
 
 import java.io.IOException;
@@ -29,6 +30,8 @@ public class Main {
         plantPopulator.plantRandomize();
         island.printLocations();
 
+        //create HashMap of probabilities from JSON
+        new DeserializeProbability().deserialize();
 
 //        List<? extends Animal> animals = animalPopulator.getAnimals();
 //        for (Animal animal : animals) {
