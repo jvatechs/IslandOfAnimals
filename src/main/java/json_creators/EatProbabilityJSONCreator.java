@@ -2,15 +2,13 @@ package json_creators;
 
 import animals.Herbivores.*;
 import animals.Predators.*;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
 import entities.Entity;
 import entities.Plants;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 
 public class EatProbabilityJSONCreator {
@@ -134,11 +132,19 @@ public class EatProbabilityJSONCreator {
         //serialize
         String pathname = "src/main/java/json_creators/animal_probability.json";
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File(pathname), map);
+
+        try(JsonGenerator generator = mapper.getFactory().createGenerator(new FileOutputStream(pathname))) {
+            generator.useDefaultPrettyPrinter();
+            mapper.writeValue(generator, map);
+        }
+
+//        mapper.writeValue(new File(pathname), map);
 
         //deserialize
-        HashMap hashMap = mapper.readValue(new BufferedInputStream(new FileInputStream(pathname)), HashMap.class);
-        System.out.println(hashMap);
+//        HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap =
+//                mapper.readValue(new BufferedInputStream(new FileInputStream(pathname)),
+//                        HashMap.class);
+//        System.out.println(hashMap);
 
     }
 }

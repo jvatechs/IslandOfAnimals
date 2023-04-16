@@ -38,6 +38,8 @@ public class Main {
 
         System.out.println("*".repeat(15) + "END OF DAY" + "*".repeat(15));
 
+        //create HashMap of probabilities from JSON
+        new DeserializeProbability().deserialize();
 
         //usage of controller methods
         AnimalController animalController = new AnimalController();

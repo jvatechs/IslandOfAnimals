@@ -1,29 +1,31 @@
 package readers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
 import entities.Entity;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
-public class DeserializeProbability implements Deserializable {
+public class DeserializeProbability {
     private static HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap;
-    @Override
-    public void deserializeJSON() throws IOException {
-        String pathname = "src/main/java/animal_probabilities.json";
-//        ObjectMapper mapper = new ObjectMapper();
 
-        TypeReference<HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>>> typeRef
-                = new TypeReference<>() {};
-        hashMap = mapper.readValue(new File(pathname), typeRef);
+    public void deserialize() throws IOException {
+        String pathname = "src/main/java/json_creators/animal_probability.json";
+        ObjectMapper mapper = new ObjectMapper();
 
         //deserialize
-//         hashMap = mapper.readValue(new BufferedInputStream(new FileInputStream(pathname)), HashMap.class);
+         hashMap = mapper.readValue(new BufferedInputStream(new FileInputStream(pathname)), HashMap.class);
         System.out.println(hashMap);
+
     }
+
     public HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> getAllProbabilitiesMap() {
         return hashMap;
     }
+
+
 }
