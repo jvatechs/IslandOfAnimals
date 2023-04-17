@@ -14,7 +14,7 @@ package entities;
      }
 
      @Override
-     public void eat(Object o) {
+     public void eat(Entity eaten) {
 
      }
 
