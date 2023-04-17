@@ -9,7 +9,7 @@ import island.Location;
 import java.math.BigDecimal;
 import java.util.List;
 
-@JsonIgnoreProperties({"location", "animals"})
+@JsonIgnoreProperties({"location", "animals", "currentCount"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonPropertyOrder({"@class", "maxWeight", "maxCount", "step", "satiety"})
 
@@ -17,12 +17,13 @@ public abstract class Animal extends Entity{
     protected double maxWeight;
     protected int maxCount;
     protected int step;
-    protected int satiety;
+    protected double satiety;
 
 
 
     protected Location location;
     private List<Animal> animals;
+    protected int currentCount;
 
     protected boolean isPredator = false;
 
@@ -32,7 +33,7 @@ public abstract class Animal extends Entity{
 
 
 
-    public abstract void eat(Object o);
+    public abstract void eat(Entity entity);
 
 
     public int reproduce(int currentCount) {
@@ -109,14 +110,24 @@ public abstract class Animal extends Entity{
         this.step = step;
     }
 
-    public int getSatiety() {
+    public double getSatiety() {
         return satiety;
     }
 
-    public void setSatiety(int satiety) {
+    public void setSatiety(double satiety) {
         this.satiety = satiety;
     }
-//
+
+    public int getCurrentCount() {
+        return currentCount;
+    }
+
+    public void setCurrentCount(int currentCount) {
+        this.currentCount = currentCount;
+    }
+
+
+    //
 //    public String getTypeName() {
 //        return typeName;
 //    }
@@ -145,9 +156,10 @@ public abstract class Animal extends Entity{
     public String toString() {
 
 //        maxWeight = Math.scalb(maxWeight, 2);
-        return String.format("%-11s %s %-6.2f %s %-4d %s %d %s %d", this.getClass().getSimpleName(),
+        return String.format("%-11s %s %-6.2f %s %-4d %s %-4d %s %d %s %-6.2f", this.getClass().getSimpleName(),
                 "maxWeight=" , maxWeight,
                 ", maxCount=", maxCount,
+                ", currentCount = ", currentCount,
                 ", step=", step,
                 ", satiety=", satiety);
 

@@ -34,11 +34,13 @@ public class DeserializeAnimalsInfo {
                     animal.setMaxWeight(jsonAnimal.getMaxWeight());
                     animal.setMaxCount(jsonAnimal.getMaxCount());
                     animal.setStep(jsonAnimal.getStep());
-                    animal.setSatiety(jsonAnimal.getStep());
-//                    System.out.println(animal);
+                    animal.setSatiety(jsonAnimal.getSatiety());
+//                    System.out.println(animal + "\t" + animal.getLocation());
                 }
 
             }
         }
+
+        System.out.println("***** Reading from animaldata.json completed ****");
     }
 }

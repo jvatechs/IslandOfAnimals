@@ -1,20 +1,18 @@
 package island;
 
 import entities.Animal;
-import entities.Entity;
 import entities.Plants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 public class Location {
     private int X;
     private int Y;
     private int maxX;
     private int maxY;
-    private HashMap<Entity, Integer> animalMap;
+    private HashMap<Animal, Integer> animalCurrentCountMap;
     private Plants plants;
     private final List<Animal> animals;
 
@@ -38,6 +36,7 @@ public class Location {
         X = x;
         Y = y;
         animals = new ArrayList<>();
+        animalCurrentCountMap = new HashMap<>();
     }
 
     public int getMaxX() {
@@ -66,6 +65,16 @@ public class Location {
 
     public List<Animal> getAnimals() {
         return animals;
+    }
+
+    public void createMapOfCount() {
+        for (Animal animal : animals) {
+            animalCurrentCountMap.put(animal, animal.getCurrentCount());
+        }
+    }
+
+    public HashMap<Animal, Integer> getAnimalCurrentCount() {
+        return animalCurrentCountMap;
     }
 
     @Override

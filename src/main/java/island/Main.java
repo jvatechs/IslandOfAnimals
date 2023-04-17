@@ -10,6 +10,7 @@ import readers.DeserializeProbability;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -30,8 +31,18 @@ public class Main {
         plantPopulator.plantRandomize();
         island.printLocations();
 
+
+
+
+
         //create HashMap of probabilities from JSON
         new DeserializeProbability().deserialize();
+
+        System.out.println("*".repeat(15));
+        System.out.println("Animal \t Current count");
+        for (Animal animal : animals) {
+            System.out.println(animal.getClass().getSimpleName() + "\t" + animal.getCurrentCount());
+        }
 
 //        List<? extends Animal> animals = animalPopulator.getAnimals();
 //        for (Animal animal : animals) {
