@@ -12,7 +12,8 @@ public class Location {
     private int Y;
     private int maxX;
     private int maxY;
-    private HashMap<Animal, Integer> animalCurrentCountMap;
+    private final HashMap<Animal, Integer> animalCurrentCountMap;
+    private HashMap<Animal, Integer> animalOnTheLocationMap;
     private Plants plants;
     private final List<Animal> animals;
 
@@ -37,6 +38,7 @@ public class Location {
         Y = y;
         animals = new ArrayList<>();
         animalCurrentCountMap = new HashMap<>();
+        animalOnTheLocationMap = new HashMap<>();
     }
 
     public int getMaxX() {
@@ -70,7 +72,12 @@ public class Location {
     public void createMapOfCount() {
         for (Animal animal : animals) {
             animalCurrentCountMap.put(animal, animal.getCurrentCount());
+
         }
+    }
+
+    public HashMap<Animal, Integer> getAnimalOnTheLocMap() {
+        return animalOnTheLocationMap;
     }
 
     public HashMap<Animal, Integer> getAnimalCurrentCount() {
@@ -79,11 +86,30 @@ public class Location {
 
     @Override
     public String toString() {
+//        if (plants == null && animals.isEmpty()) {
+//            return "Location{" +
+//                    "X=" + X +
+//                    ", Y=" + Y +
+//                    '}';
+//        } else if (animals.isEmpty()) {
+//            return "Location{" +
+//                    "X=" + X +
+//                    ", Y=" + Y +
+//                    '}' + " " +
+//                    plants;
+//        }
+//        if (plants == null) {
+//            return "Location{" +
+//                    "X=" + X +
+//                    ", Y=" + Y +
+//                    '}' + " " +
+//                    animals;
+//        }
         return "Location{" +
                 "X=" + X +
                 ", Y=" + Y +
                 '}' + " " +
                 plants + " " +
-                animals;
+                animalOnTheLocationMap + animals;
     }
 }

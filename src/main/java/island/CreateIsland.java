@@ -42,11 +42,11 @@ public class CreateIsland {
             System.out.println(location);
 
             //not necessary just for test
-            System.out.println("********** HASHMAP of COUNTS:");
-            HashMap<Animal, Integer> animalCurrentCount = location.getAnimalCurrentCount();
-            animalCurrentCount.forEach((a, b) -> System.out.println(a.getClass().getSimpleName() + "\t , currentCount = " + b));
-            System.out.println("********** ENDED");
-            System.out.println();
+//            System.out.println("********** HASHMAP of COUNTS:");
+//            HashMap<Animal, Integer> animalCurrentCount = location.getAnimalCurrentCount();
+//            animalCurrentCount.forEach((a, b) -> System.out.println(a.getClass().getSimpleName() + "\t , currentCount = " + b));
+//            System.out.println("********** ENDED");
+//            System.out.println();
         }
     }
 

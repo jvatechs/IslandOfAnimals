@@ -7,9 +7,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import island.Location;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 
-@JsonIgnoreProperties({"location", "animals", "currentCount"})
+@JsonIgnoreProperties({"location", "animals", "currentCount", "animalOnTheLocation", "currentSatiety"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonPropertyOrder({"@class", "maxWeight", "maxCount", "step", "satiety"})
 
@@ -24,6 +25,9 @@ public abstract class Animal extends Entity{
     protected Location location;
     private List<Animal> animals;
     protected int currentCount;
+    protected int animalOnTheLocation;
+    protected double currentSatiety;
+    protected boolean isHungry;
 
     protected boolean isPredator = false;
 
@@ -33,7 +37,43 @@ public abstract class Animal extends Entity{
 
 
 
-    public abstract void eat(Entity entity);
+    public void eat(Entity eaten, Location currentLocation) {
+
+        //if animal
+        if (eaten instanceof Animal) {
+            double currentWeight = ((Animal) eaten).getMaxWeight();
+//            int current = ((Animal) eaten).location.getAnimalCurrentCount().get(eaten);
+            HashMap<Animal, Integer> animalOnTheLocMap = location.getAnimalOnTheLocMap();
+            int countOfTheEaten = animalOnTheLocMap.get(eaten);
+
+            //remove animal from the location if was eaten
+            if (countOfTheEaten - 1 == 0) {
+                animalOnTheLocMap.remove(eaten);
+                //or decrease the animal quantity if was more than 1
+            } else {
+                animalOnTheLocMap.put((Animal) eaten, countOfTheEaten - 1);
+            }
+
+            if (this.satiety < currentWeight) {
+                this.currentSatiety = this.satiety;
+            } else {
+                this.currentSatiety = currentWeight;
+            }
+            this.isHungry = false;
+
+        }
+        //if plants
+        else {
+            if (eaten instanceof Plants) {
+                Plants currentPlants = location.getPlants();
+                while (this.currentSatiety <= this.satiety && currentPlants.getCurrentCount() != 0) {
+                    int plantCount = currentPlants.getCurrentCount();
+                    currentPlants.setCurrentCount(plantCount - 1);
+                    this.currentSatiety += currentPlants.getMaxWeight();
+                }
+            }
+        }
+    }
 
 
     public int reproduce(int currentCount) {
@@ -126,15 +166,15 @@ public abstract class Animal extends Entity{
         this.currentCount = currentCount;
     }
 
+    public int getAnimalOnTheLocation() {
+        return animalOnTheLocation;
+    }
 
-    //
-//    public String getTypeName() {
-//        return typeName;
-//    }
-//
-//    public void setTypeName(String typeName) {
-//        this.typeName = typeName;
-//    }
+    public void setAnimalOnTheLocation(int animalOnTheLocation) {
+        this.animalOnTheLocation = animalOnTheLocation;
+    }
+
+
 
     public Location getLocation() {
         return location;
@@ -152,22 +192,28 @@ public abstract class Animal extends Entity{
         this.animals = animals;
     }
 
+    public double getCurrentSatiety() {
+        return currentSatiety;
+    }
+
+    public void setCurrentSatiety(double currentSatiety) {
+        this.currentSatiety = currentSatiety;
+    }
+
     @Override
     public String toString() {
 
 //        maxWeight = Math.scalb(maxWeight, 2);
-        return String.format("%-11s %s %-6.2f %s %-4d %s %-4d %s %d %s %-6.2f", this.getClass().getSimpleName(),
-                "maxWeight=" , maxWeight,
-                ", maxCount=", maxCount,
-                ", currentCount = ", currentCount,
-                ", step=", step,
-                ", satiety=", satiety);
+//        return String.format("%-11s %s %-6.2f %s %-4d  %s %-4d %s %d %s %-6.2f", this.getClass().getSimpleName(),
+        return this.getClass().getSimpleName();
+//                "maxWeight=" , maxWeight,
+//                ", maxCount=", maxCount,
+//                ", animalOnTheLocation = ", animalOnTheLocation
+//                , ", step=", step,
+//                ", satiety=", satiety
+//        );
 
 
-//        return  this.getClass().getSimpleName() +
-//                "\t\t\t maxWeight=" + maxWeight +
-//                ", maxCount=" + maxCount +
-//                ", step=" + step +
-//                ", satiety=" + satiety;
+
     }
 }
