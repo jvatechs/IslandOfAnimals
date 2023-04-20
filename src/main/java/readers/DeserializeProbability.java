@@ -14,7 +14,7 @@ public class DeserializeProbability {
     private static HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap;
 
     public void deserialize() throws IOException {
-        String pathname = "src/main/java/json_creators/animal_probability.json";
+        String pathname = "src/main/java/animal_probabilities.json";
         ObjectMapper mapper = new ObjectMapper();
 
         //deserialize
