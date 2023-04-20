@@ -2,12 +2,9 @@ package readers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
-import populators.AnimalPopulator;
-import populators.AnimalsListCreator;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class DeserializeAnimalsInfo {

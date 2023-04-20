@@ -12,9 +12,6 @@ public abstract class ControllerCommon {
     protected Random random = new Random();
     protected Location[][] locations = CreateIsland.island;
 
-
-
-
     protected void putInHashMapAnimal(HashMap<Animal, Integer> map, Animal animal) {
         if(!map.containsKey(animal)) {
             map.put(animal, 1);
@@ -31,12 +28,4 @@ public abstract class ControllerCommon {
         newAnimal.setSatiety(example.getSatiety());
         return newAnimal;
     }
-
-//    protected HashMap<Class<? extends Entity>, Integer> getCurrentProbabilityMap(Class<? extends Entity> eater) {
-////        System.out.println("Classname" + eater.getTypeName());
-////        System.out.println("Class: " + eater);
-////        System.out.println("HashMap: " + hashMap.get(eater));
-////        System.out.println("*".repeat(15));
-//        return hashMap.get(eater);
-//    }
 }

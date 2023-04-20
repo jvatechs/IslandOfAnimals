@@ -20,7 +20,11 @@ public class Predator extends Animal implements EatOtherAnimalAble{
 //
 //     }
 
-
+//    @Override
+//    public Animal clone() {
+//
+//        return super.clone();
+//    }
 
 
 //     @Override
