@@ -10,7 +10,6 @@ import readers.DeserializeProbability;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -27,7 +26,8 @@ public class Main {
         new DeserializeAnimalsInfo().deserializeJSON(animals);
 
         //populate island randomly by animals
-        new AnimalPopulator().setAnimals(animals);
+        AnimalPopulator animalPopulator = new AnimalPopulator();
+        animalPopulator.setAnimals(animals);
         plantPopulator.plantRandomize();
         island.printLocations();
 

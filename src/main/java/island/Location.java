@@ -14,6 +14,8 @@ public class Location {
     private int maxY;
     private final HashMap<Animal, Integer> animalCurrentCountMap;
     private HashMap<Animal, Integer> animalOnTheLocationMap;
+
+    private HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap;
     private Plants plants;
     private final List<Animal> animals;
 
@@ -39,6 +41,7 @@ public class Location {
         animals = new ArrayList<>();
         animalCurrentCountMap = new HashMap<>();
         animalOnTheLocationMap = new HashMap<>();
+        animalListPerNameMap = new HashMap<Class<? extends Animal>, ArrayList<Animal>>();
     }
 
     public int getMaxX() {
@@ -80,36 +83,24 @@ public class Location {
         return animalOnTheLocationMap;
     }
 
+    public HashMap<Class<? extends Animal>, ArrayList<Animal>> getAnimalListPerNameMap() {
+        return animalListPerNameMap;
+    }
+
     public HashMap<Animal, Integer> getAnimalCurrentCount() {
         return animalCurrentCountMap;
     }
 
     @Override
     public String toString() {
-//        if (plants == null && animals.isEmpty()) {
-//            return "Location{" +
-//                    "X=" + X +
-//                    ", Y=" + Y +
-//                    '}';
-//        } else if (animals.isEmpty()) {
-//            return "Location{" +
-//                    "X=" + X +
-//                    ", Y=" + Y +
-//                    '}' + " " +
-//                    plants;
-//        }
-//        if (plants == null) {
-//            return "Location{" +
-//                    "X=" + X +
-//                    ", Y=" + Y +
-//                    '}' + " " +
-//                    animals;
-//        }
+
         return "Location{" +
                 "X=" + X +
                 ", Y=" + Y +
                 '}' + " " +
                 plants + " " +
-                animalOnTheLocationMap + animals;
+//                animalOnTheLocationMap + animals;
+                animalListPerNameMap;
+//        animals;
     }
 }
