@@ -1,6 +1,7 @@
 package island;
 
 import entities.Animal;
+import populators.AnimalController;
 import populators.AnimalPopulator;
 import populators.AnimalsListCreator;
 import populators.PlantPopulator;
@@ -20,42 +21,38 @@ public class Main {
         PlantPopulator plantPopulator = new PlantPopulator();
 
         AnimalsListCreator listCreator = new AnimalsListCreator();
-        List<? extends Animal> animals = listCreator.getAnimals();
+        List<? extends Animal> animalsInitList = listCreator.getAnimals();
 
         //setting data from JSON to each animal
-        new DeserializeAnimalsInfo().deserializeJSON(animals);
-
-        //populate island randomly by animals
-        AnimalPopulator animalPopulator = new AnimalPopulator();
-        animalPopulator.setAnimals(animals);
-        plantPopulator.plantRandomize();
-        island.printLocations();
-
-
-
-
-
+        new DeserializeAnimalsInfo().deserializeJSON(animalsInitList);
         //create HashMap of probabilities from JSON
         new DeserializeProbability().deserialize();
 
-        System.out.println("*".repeat(15));
-        System.out.println("Animal \t Current count");
-        for (Animal animal : animals) {
-            System.out.println(animal.getClass().getSimpleName() + "\t" + animal.getCurrentCount());
-        }
+        //populate island randomly by animals
+        AnimalPopulator animalPopulator = new AnimalPopulator();
+        animalPopulator.setAnimals(animalsInitList);
+        plantPopulator.plantRandomize();
+        //print all locations
+        island.printLocations();
 
-//        List<? extends Animal> animals = animalPopulator.getAnimals();
-//        for (Animal animal : animals) {
-//            System.out.println(animal);
-//        }
+        System.out.println("*".repeat(15) + "END OF DAY" + "*".repeat(15));
 
-//        new CreateOwnJson().createJson();
+        island.printTotalAnimalsCount();
 
-//        JsonFiller jsonFiller = new JsonFiller();
 
-//        CreateOwnJson createOwnJson = new CreateOwnJson();
-//        createOwnJson.createJson();
+        //usage of controller methods
+        AnimalController animalController = new AnimalController();
+        animalController.eatControl_ver2();
+        animalController.cleanMapFromEmptyValue();
+        animalController.moveControl_ver3();
+        animalController.cleanMapFromEmptyValue();
 
+        animalController.reproduceControl();
+        animalController.resetBooleans();
+
+        //print locations and animals after the 1st day
+        island.printLocations();
+        island.printTotalAnimalsCount();
 
     }
 }
