@@ -14,111 +14,6 @@ public class AnimalController extends ControllerCommon {
     private static final HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap =
             new DeserializeProbability().getAllProbabilitiesMap();
 
-    //working
-    @Deprecated
-    public void eatControl() {
-        for (Location[] location : locations) {
-            for (Location currentLoc : location) {
-                HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap = currentLoc.getAnimalListPerNameMap();
-                if (!animalListPerNameMap.isEmpty()) {
-                    animalListPerNameMap.forEach((animal, animalsList) -> {
-                        HashMap<Class<? extends Entity>, Integer> probabilities = getCurrentProbabilityMap(animal);
-
-                        for (Animal animalObject : animalsList) {
-                            if (animalObject.canEatAnimalsOrNot()) {
-                                probabilities.forEach((eaten, probability) -> {
-                                    if (animalListPerNameMap.containsKey(eaten)) {
-                                        if (Math.random() <= ((double) currentProbability) / 100) {
-                                            //need work under eat logic of animals
-                                            animalObject.eat(animalListPerNameMap.get(eaten).get(0), currentLoc);
-                                        }
-                                    }
-                                });
-
-                            }
-                            //this if case made for Herbivores which can eat other animals
-                            //for Boar, Mouse, Duck and for other Herbivores
-                            if (animalObject.getPredator()
-                                    && currentLoc.getPlants().getCurrentCount() != 0
-                                    && currentLoc.getPlants() != null) {
-                                //also  need work under eat logic of plants
-                                animalObject.eat(currentLoc.getPlants(), currentLoc);
-                            }
-
-                            //if not eat decrease current satiety
-                            if (animalObject.getIsHungry()) {
-                                animalObject.setCurrentSatiety(animalObject.getCurrentSatiety() * 0.5);
-                            }
-
-                            if (animalObject.getCurrentSatiety() < 0.1*animalObject.getSatiety()) {
-                                //should think about logic of dead
-                                //I think that also need to add to dead() Location parameter.
-                                animalObject.dead(animalObject, currentLoc);
-                            }
-                        }
-                    });
-
-                }
-
-            }
-
-        }
-
-    }
-    //do after eating
-    @Deprecated
-    public void moveControl() {
-        for (Location[] location : locations) {
-            for (Location currentLoc : location) {
-                HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap =
-                        currentLoc.getAnimalListPerNameMap();
-
-
-                if (!animalListPerNameMap.isEmpty()) {
-
-
-
-                    animalListPerNameMap.forEach((animal, list) -> {
-
-
-
-                        for (Animal animalInList : list) {
-                            int step = animalInList.getStep();
-                            if (!animalInList.getIsMoved()) {
-                                for (int i = 0; i < step; i++) {
-                                    Location newLocation = animalInList.move(currentLoc, step);
-
-                                    HashMap<Class<? extends Animal>, ArrayList<Animal>> newAnimalListPerNameMap
-                                            = newLocation.getAnimalListPerNameMap();
-
-                                    //add to new loc
-                                    ArrayList<Animal> animalArrayList;
-                                    if(!newAnimalListPerNameMap.containsKey(animal)) {
-                                        animalArrayList = new ArrayList<>();
-                                    } else {
-                                        animalArrayList = newAnimalListPerNameMap.get(animal);
-                                    }
-                                    animalInList.setIsMoved(true);
-                                    animalArrayList.add(animalInList);
-                                    newAnimalListPerNameMap.put(animal, animalArrayList);
-
-                                    //delete from old loc
-                                    if (list.size() - 1 == 0) {
-                                        animalListPerNameMap.remove(animal);
-                                    } else {
-                                        list.remove(animalInList);
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        }
-
-    }
-
-
 
 
     public void eatControl_ver2() {
@@ -323,7 +218,6 @@ public class AnimalController extends ControllerCommon {
         }
     }
 
-
     @Deprecated
     public void controlEating() {
         for (Location[] location : locations) {
@@ -426,6 +320,4 @@ public class AnimalController extends ControllerCommon {
     private void getEatenProbability(HashMap<Class<? extends Entity>, Integer> mapOfEaten, Class<? extends Entity> eaten) {
         currentProbability = mapOfEaten.get(eaten);
     }
-
-
 }
