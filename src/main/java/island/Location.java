@@ -103,4 +103,22 @@ public class Location {
                 animalListPerNameMap;
 //        animals;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        if (X != location.X) return false;
+        return Y == location.Y;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = X;
+        result = 31 * result + Y;
+        return result;
+    }
 }
