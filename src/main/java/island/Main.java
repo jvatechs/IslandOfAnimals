@@ -48,6 +48,7 @@ public class Main {
         animalController.cleanMapFromEmptyValue();
 
         animalController.reproduceControl();
+        plantPopulator.plantGrow();
         animalController.resetBooleans();
 
         //print locations and animals after the 1st day
