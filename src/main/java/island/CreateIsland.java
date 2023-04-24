@@ -1,9 +1,11 @@
 package island;
 
 import entities.Animal;
+import populators.AnimalsListCreator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class CreateIsland {
@@ -11,15 +13,19 @@ public class CreateIsland {
     public static int widthOfIsland;
     public static Location[][] island;
     ArrayList<Location> locations;
+    private static List<? extends Animal> animalsInitList;
+
 
     public CreateIsland(int length, int width) {
         lengthOfIsland = length;
         widthOfIsland = width;
         island = new Location[length][width];
         setIslandLocations();
+        setAnimalsInitList();
     }
 
-    public void setIslandLocations() {
+
+    private void setIslandLocations() {
         locations = new ArrayList<>();
         //set
         for (int i = 0; i < island.length; i++) {
@@ -42,13 +48,6 @@ public class CreateIsland {
     public void printLocations() {
         for (Location location : locations) {
             System.out.println(location);
-
-            //not necessary just for test
-//            System.out.println("********** HASHMAP of COUNTS:");
-//            HashMap<Animal, Integer> animalCurrentCount = location.getAnimalCurrentCount();
-//            animalCurrentCount.forEach((a, b) -> System.out.println(a.getClass().getSimpleName() + "\t , currentCount = " + b));
-//            System.out.println("********** ENDED");
-//            System.out.println();
         }
     }
 
@@ -62,4 +61,12 @@ public class CreateIsland {
                 .forEach((x, y) -> System.out.println(x + "\t" + y));
     }
 
+    private void setAnimalsInitList() {
+        AnimalsListCreator listCreator = new AnimalsListCreator();
+        animalsInitList = listCreator.getAnimals();
+    }
+
+    public static List<? extends Animal> getAnimalsInitList() {
+        return animalsInitList;
+    }
 }

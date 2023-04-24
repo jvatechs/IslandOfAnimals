@@ -10,11 +10,10 @@ import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class AnimalController extends ControllerCommon {
-    private int currentProbability;
-    private static final HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap =
+
+    protected static final HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap =
             new DeserializeProbability().getAllProbabilitiesMap();
-
-
+    protected int currentProbability;
 
     public void eatControl_ver2() {
         for (Location[] location : locations) {
@@ -83,9 +82,9 @@ public class AnimalController extends ControllerCommon {
             }
         }
         System.out.println("*".repeat(15) + "ANIMALS ATE" + "*".repeat(15));
-
+        cleanMapFromEmptyValue();
     }
-    public void moveControl_ver3() {
+    public void moveControl_ver3() throws NoSuchFieldException, ClassNotFoundException {
         for (Location[] location : locations) {
             for (Location currentLoc : location) {
                 HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap = currentLoc.getAnimalListPerNameMap();
@@ -95,51 +94,91 @@ public class AnimalController extends ControllerCommon {
                             = new ArrayList<>(animalListPerNameMap.entrySet());
 
                     for (Map.Entry<Class<? extends Animal>, ArrayList<Animal>> entry : entries) {
-                        for (Animal a : entry.getValue()) {
-                            a.setIsMoved(false);
+
+                        Class<? extends Animal> animalClass = entry.getKey();
+
+                        // if caterpillar - skip it cuz step = 0
+                        Class caterpillar = Class.forName("animals.Herbivores.Caterpillar");
+                        if (animalClass == caterpillar) {
+                            continue;
                         }
 
-                        Class<? extends Animal> animal = entry.getKey();
+
+
+
                         CopyOnWriteArrayList<Animal> list = new CopyOnWriteArrayList<>(entry.getValue());
 
+//                        for (Animal a : entry.getValue()) {
+//                            a.setIsMoved(false);
+//                        }
 
                         Location newLocation = null;
 
+//                        if (list.get(0).getStep() == 0) {
+//                            continue;
+//                        }
+
                         for (Animal animalInList : list) {
+//                            animalInList.setIsMoved(false);
+
                             int step = animalInList.getStep();
 
-//                            System.out.println(animalInList.getIsMoved());
+                            //# TEST TOOLS
+//                            System.out.println(animalInList + " OLD: " + currentLoc );
+//                            System.out.println("Is the animal moved? " + animalInList.getIsMoved());
+
                             if (!animalInList.getIsMoved()) {
                                     newLocation = animalInList.move(currentLoc, step);
                                     HashMap<Class<? extends Animal>, ArrayList<Animal>> newAnimalListPerNameMap
                                             = newLocation.getAnimalListPerNameMap();
 
                                     // add to new location
-                                    ArrayList<Animal> animalArrayList;
-                                    if (!newAnimalListPerNameMap.containsKey(animal)) {
-                                        animalArrayList = new ArrayList<>();
-                                    } else {
-                                        animalArrayList = newAnimalListPerNameMap.get(animal);
-                                    }
-//                                    animalInList.setIsMoved(true);
-                                    animalArrayList.add(animalInList);
-                                    newAnimalListPerNameMap.put(animal, animalArrayList);
+//                                    ArrayList<Animal> animalArrayList;
+//                                    if (!newAnimalListPerNameMap.containsKey(animalClass)) {
+//                                        animalArrayList = new ArrayList<>();
+//                                    } else {
+//                                        animalArrayList = newAnimalListPerNameMap.get(animalClass);
+//                                    }
+//                                    animalArrayList.add(animalInList);
+//                                    System.out.println("Added animals list to new Location: " + animalArrayList);
+//                                    newAnimalListPerNameMap.put(animalClass, animalArrayList);
+
+//
+//                                animalArrayList.clear();
+//                                animalArrayList.addAll(entry.getValue());
+//                                newAnimalListPerNameMap.put(animalClass, animalArrayList);
+
 
 
                                 if (!newLocation.equals(currentLoc)) {
+
+                                    // add to new location
+                                    ArrayList<Animal> animalArrayList;
+                                    if (!newAnimalListPerNameMap.containsKey(animalClass)) {
+                                        animalArrayList = new ArrayList<>();
+                                    } else {
+                                        animalArrayList = newAnimalListPerNameMap.get(animalClass);
+                                    }
+                                    animalArrayList.add(animalInList);
+//                                    System.out.println("Added animals list to new Location: " + animalArrayList);
+                                    newAnimalListPerNameMap.put(animalClass, animalArrayList);
+
+
+                                    //removing from the old location
                                     list.remove(animalInList);
                                     ArrayList<Animal> animals = new ArrayList<>();
                                     animals.addAll(list);
-                                    animalListPerNameMap.put(animal, animals);
+                                    animalListPerNameMap.put(animalClass, animals);
                                 }
 
 
                             }
                             //# TEST TOOLS
 //                            System.out.println(animalInList + " NEW: " + newLocation );
-//                            System.out.println("Old location contains the animal object? " + currentLoc.getAnimalListPerNameMap().get(animal).contains(animalInList));
+//                            System.out.println();
+//                            System.out.println("Old location contains the animalClass object? " + currentLoc.getAnimalListPerNameMap().get(animalClass).contains(animalInList));
 //                            assert newLocation != null;
-//                            System.out.println("New location contains the animal object? " + newLocation.getAnimalListPerNameMap().get(animal).contains(animalInList));
+//                            System.out.println("New location contains the animalClass object? " + newLocation.getAnimalListPerNameMap().get(animalClass).contains(animalInList));
 //                            if (newLocation.equals(currentLoc)) System.out.println("Old and New Locations are EQUAL!");
 //                            System.out.println("*".repeat(15));
                         }
@@ -148,6 +187,7 @@ public class AnimalController extends ControllerCommon {
             }
         }
         System.out.println("*".repeat(15) + "ANIMALS MOVED" + "*".repeat(15));
+        cleanMapFromEmptyValue();
     }
     //reproduce do after all
     public void reproduceControl() {
@@ -169,6 +209,7 @@ public class AnimalController extends ControllerCommon {
                             for (int i = 0; i < countOfBabies; i++) {
                                 try {
                                     Animal newAnimal = newAnimalObjectCreate(list.get(0), animalClass);
+//                                    newAnimal.setID(getMaxId());
 //                                    System.out.println(newAnimal);
                                     list.add(newAnimal);
                                 } catch (ReflectiveOperationException e) {
@@ -182,10 +223,10 @@ public class AnimalController extends ControllerCommon {
             }
         }
         System.out.println("*".repeat(15) + "ANIMALS REPRODUCED" + "*".repeat(15));
-
+        resetBooleans();
     }
     //reset boolean values
-    public void resetBooleans() {
+    private void resetBooleans() {
         for (Location[] location : locations) {
             for (Location currentLoc : location) {
                 HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap = currentLoc.getAnimalListPerNameMap();
@@ -210,99 +251,13 @@ public class AnimalController extends ControllerCommon {
         System.out.println("*".repeat(15) + "MORNING: ANIMALS ARE HUNGRY AND NOT MOVED" + "*".repeat(15));
     }
 
-    public void cleanMapFromEmptyValue() {
+    private void cleanMapFromEmptyValue() {
         for (Location[] location : locations) {
             for (Location currentLoc : location) {
                 currentLoc.getAnimalListPerNameMap().entrySet().removeIf(entry -> entry.getValue().isEmpty());
             }
         }
     }
-
-    @Deprecated
-    public void controlEating() {
-        for (Location[] location : locations) {
-            for (Location currentLoc : location) {
-                //need change animal to animalist
-                HashMap<Animal, Integer> animalOnTheLocMap = currentLoc.getAnimalOnTheLocMap();
-                if (!animalOnTheLocMap.isEmpty()) {
-                    animalOnTheLocMap.forEach((animal, count) ->
-                    {
-                        //getclass of current animal object
-                        Class<? extends Entity> currentAnimalClass = animal.getClass();
-                        //get probabilities map of the animal
-                        HashMap<Class<? extends Entity>, Integer> probabilities = getCurrentProbabilityMap(currentAnimalClass);
-                        if (animal.canEatAnimalsOrNot()) {
-                            animalOnTheLocMap.forEach((eaten, countEaten) -> {
-                                Class<? extends Entity> canBeEatenClass = eaten.getClass();
-                                if (checkIfContains(probabilities, canBeEatenClass)) {
-                                    getEatenProbability(probabilities, canBeEatenClass);
-
-                                    //if count of the same animals in the same loc more than 1 we should use that
-                                    for (int i = 0; i < count; i++) {
-                                        if (Math.random() <= ((double) currentProbability) / 100) {
-                                            //need work under eat logic of animals
-                                            animal.eat(eaten, currentLoc);
-                                        }
-                                    }
-
-                                }
-                            });
-                        }
-
-                        //this if case made for Herbivores which can eat other animals
-                        //for Boar, Mouse, Duck and for other Herbivores
-                        if (animal.getPredator()
-                                && currentLoc.getPlants().getCurrentCount() != 0
-                                && currentLoc.getPlants() != null) {
-                            //also  need work under eat logic of plants
-                            animal.eat(currentLoc.getPlants(), currentLoc);
-                        }
-
-
-                        if (animal.getCurrentSatiety() < 0.1*animal.getSatiety()) {
-                            //should think about logic of dead
-                            //I think that also need to add to dead() Location parameter.
-//                            animal.dead();
-                        }
-                    });
-                }
-            }
-        }
-    }
-    @Deprecated
-    public void controlMoving() {
-        int result = random.nextInt(4);
-
-        for (Location[] location : locations) {
-            for (Location currentLoc : location) {
-                HashMap<Animal, Integer> animalCurrentCount = currentLoc.getAnimalCurrentCount();
-                animalCurrentCount.forEach((animal, count) -> {
-                    if (animal.getIsMoved()) {
-                        for (int i = 0; i < count; i++) {
-                            Location movedLoc = animal.move(currentLoc);
-                            HashMap<Animal, Integer> animalMovedCountMap = movedLoc.getAnimalCurrentCount();
-//                            movedLoc.getAnimalOnTheLocMap().put()
-//                            if(!animalCurrentCount.containsKey(animal)) {
-//                                animalCurrentCount.put(animal, 1);
-//                            } else {
-//                                animalCurrentCount.put(animal, animalCurrentCount.get(animal) + 1);
-//                            }
-                            animal.setIsMoved(true);
-                            //add to new loc
-                            putInHashMapAnimal(animalMovedCountMap, animal);
-                            //delete from old loc
-                            if(animalCurrentCount.get(animal) == 1) {
-                                animalCurrentCount.remove(animal);
-                            } else {
-                                animalCurrentCount.put(animal, animalCurrentCount.get(animal) - 1);
-                            }
-                        }
-                    }
-                } );
-            }
-        }
-    }
-
 
 
     private HashMap<Class<? extends Entity>, Integer> getCurrentProbabilityMap(Class<? extends Entity> eater) {
@@ -313,11 +268,6 @@ public class AnimalController extends ControllerCommon {
         return hashMap.get(eater);
     }
 
-    private boolean checkIfContains(HashMap<Class<? extends Entity>, Integer> map, Class<? extends Entity> eaten) {
-        return map.containsKey(eaten);
-    }
 
-    private void getEatenProbability(HashMap<Class<? extends Entity>, Integer> mapOfEaten, Class<? extends Entity> eaten) {
-        currentProbability = mapOfEaten.get(eaten);
-    }
+
 }

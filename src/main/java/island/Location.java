@@ -12,7 +12,7 @@ public class Location {
     private int Y;
     private int maxX;
     private int maxY;
-    private final HashMap<Animal, Integer> animalCurrentCountMap;
+//    private final HashMap<Animal, Integer> animalCurrentCountMap;
     private HashMap<Animal, Integer> animalOnTheLocationMap;
 
     private HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap;
@@ -39,7 +39,7 @@ public class Location {
         X = x;
         Y = y;
         animals = new ArrayList<>();
-        animalCurrentCountMap = new HashMap<>();
+//        animalCurrentCountMap = new HashMap<>();
         animalOnTheLocationMap = new HashMap<>();
         animalListPerNameMap = new HashMap<Class<? extends Animal>, ArrayList<Animal>>();
     }
@@ -72,12 +72,11 @@ public class Location {
         return animals;
     }
 
-    public void createMapOfCount() {
-        for (Animal animal : animals) {
-            animalCurrentCountMap.put(animal, animal.getCurrentCount());
-
-        }
-    }
+//    public void createMapOfCount() {
+//        for (Animal animal : animals) {
+//            animalCurrentCountMap.put(animal, animal.getCurrentCount());
+//        }
+//    }
 
     public HashMap<Animal, Integer> getAnimalOnTheLocMap() {
         return animalOnTheLocationMap;
@@ -87,9 +86,9 @@ public class Location {
         return animalListPerNameMap;
     }
 
-    public HashMap<Animal, Integer> getAnimalCurrentCount() {
-        return animalCurrentCountMap;
-    }
+//    public HashMap<Animal, Integer> getAnimalCurrentCount() {
+//        return animalCurrentCountMap;
+//    }
 
     @Override
     public String toString() {

@@ -7,15 +7,13 @@ import entities.Entity;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Map;
 
-public class DeserializeProbability {
+public class DeserializeProbability implements Deserializable {
     private static HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap;
-
-    public void deserialize() throws IOException {
+    @Override
+    public void deserializeJSON() throws IOException {
         String pathname = "src/main/java/animal_probabilities.json";
-        ObjectMapper mapper = new ObjectMapper();
-
+//        ObjectMapper mapper = new ObjectMapper();
 
         TypeReference<HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>>> typeRef
                 = new TypeReference<>() {};
@@ -23,16 +21,9 @@ public class DeserializeProbability {
 
         //deserialize
 //         hashMap = mapper.readValue(new BufferedInputStream(new FileInputStream(pathname)), HashMap.class);
-
-
         System.out.println(hashMap);
     }
-
-
-
     public HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> getAllProbabilitiesMap() {
         return hashMap;
     }
-
-
 }

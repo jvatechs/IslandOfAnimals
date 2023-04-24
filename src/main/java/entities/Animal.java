@@ -25,12 +25,8 @@ public abstract class Animal extends Entity implements Cloneable {
     protected int step;
     protected double satiety;
 
-
-
-//    protected Location location;
     private List<Animal> animals;
     protected int currentCount;
-    protected int animalOnTheLocation;
     protected double currentSatiety;
 
     // #ATOMIC Integer block with incrementAndGet method in constructor
@@ -267,7 +263,7 @@ public abstract class Animal extends Entity implements Cloneable {
         Random random = new Random();
 
         if (step == 0) {
-            return currentLocation;
+            return null;
         }
 
         Location newLocation = null;
@@ -286,49 +282,10 @@ public abstract class Animal extends Entity implements Cloneable {
             currentLocation = newLocation;
         }
         this.isMoved = true;
+
         return newLocation;
 
     }
-
-//    public Location move(Location currentLocation, int step) {
-//        Random random = new Random();
-//
-//                if (step == 0) {
-//            return currentLocation;
-//        }
-//
-//        Location newLocation = null;
-//
-//        this.isMoved = false;
-//        for (int i = 0; i < step; i++) {
-//            int result = random.nextInt(4);
-//
-//            newLocation =  switch (result) {
-//                case 0 -> {
-//                    System.out.println("UP");
-//                    yield moveUp(currentLocation);
-//                }
-//
-//                case 1 -> {
-//                    System.out.println("DOWN");
-//                    yield moveDown(currentLocation);
-//                }
-//                case 2 -> {
-//                    System.out.println("LEFT");
-//                    yield moveLeft(currentLocation);
-//                }
-//                case 3 -> {
-//                    System.out.println("RIGHT");
-//                    yield moveRight(currentLocation);
-//                }
-//                default -> throw new IllegalStateException("Unexpected value: " + result);
-//            };
-//            System.out.printf("Location after step %d %s\n", i+1, newLocation);
-//            currentLocation = newLocation;
-//        }
-//        this.isMoved = true;
-//        return newLocation;
-//    }
 
 
     //GETTERS AND SETTERS
@@ -337,9 +294,6 @@ public abstract class Animal extends Entity implements Cloneable {
         return isPredator;
     }
 
-//    public void setPredator(boolean predator) {
-//        isPredator = predator;
-//    }
 
     public double getMaxWeight() {
         return maxWeight;
@@ -381,15 +335,6 @@ public abstract class Animal extends Entity implements Cloneable {
         this.currentCount = currentCount;
     }
 
-    public int getAnimalOnTheLocation() {
-        return animalOnTheLocation;
-    }
-
-    public void setAnimalOnTheLocation(int animalOnTheLocation) {
-        this.animalOnTheLocation = animalOnTheLocation;
-    }
-
-
     public List<Animal> getAnimals() {
         return animals;
     }
@@ -414,12 +359,12 @@ public abstract class Animal extends Entity implements Cloneable {
         isMoved = moved;
     }
 
-    public Integer getUniqueID() {
+    public Integer getID() {
         return uniqueID;
     }
 
-    public void setUniqueID(Integer uniqueID) {
-        this.uniqueID = uniqueID;
+    public void setID(Integer id) {
+        this.id = id;
     }
 
     public String getSimpleName() {
@@ -440,7 +385,7 @@ public abstract class Animal extends Entity implements Cloneable {
 //        maxWeight = Math.scalb(maxWeight, 2);
 //        return String.format("%-11s %s %-6.2f %s %-4d  %s %-4d %s %d %s %-6.2f", this.getClass().getSimpleName(),
         return this.getClass().getSimpleName()
-                + " id: " + this.uniqueID ;
+                + " id: " + this.id ;
 //                "maxWeight=" , maxWeight,
 //                ", maxCount=" + maxCount
 //                ", animalOnTheLocation = ", animalOnTheLocation
