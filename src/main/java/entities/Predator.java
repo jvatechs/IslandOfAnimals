@@ -1,6 +1,8 @@
 package entities;
 
- public class Predator extends Animal {
+import island.Location;
+
+public class Predator extends Animal implements EatOtherAnimalAble{
 
 //     public Predator(int maxWeight, int maxCount, int step, int satiety) {
 //         this.maxWeight = maxWeight;
@@ -9,10 +11,20 @@ package entities;
 //         this.satiety = satiety;
 //     }
 
-     @Override
-     public void eat(Object o) {
-
+     public Predator() {
+         isPredator = true;
      }
+
+//     @Override
+//     public void eat(Entity eaten, Location location) {
+//
+//     }
+
+//    @Override
+//    public Animal clone() {
+//
+//        return super.clone();
+//    }
 
 
 //     @Override

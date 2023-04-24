@@ -2,25 +2,24 @@ package readers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
-import populators.AnimalPopulator;
-import populators.AnimalsListCreator;
+import island.CreateIsland;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class DeserializeAnimalsInfo {
-    public void deserializeJSON(List<? extends Animal> animals) throws IOException {
+public class DeserializeAnimalsInfo implements Deserializable {
+
+
+    @Override
+    public void deserializeJSON() throws IOException {
         //init list
-//        AnimalPopulator animalPopulator = new AnimalPopulator();
-//        AnimalsListCreator listCreator = new AnimalsListCreator();
-//        List<? extends Animal> animals = listCreator.getAnimals();
 
         //init mapper and pathname
-        ObjectMapper mapper = new ObjectMapper();
-        String pathname = "src/main/java/entities_info.json";
+//        ObjectMapper mapper = new ObjectMapper();
+         String pathname = "src/main/java/entities_info.json";
 
+        List<? extends Animal> animals = CreateIsland.getAnimalsInitList();
         //deserialize
         List<Animal> jsonAnimalList = mapper.readValue(new File(pathname),
                 mapper.getTypeFactory().constructCollectionLikeType(List.class, Animal.class));
@@ -34,11 +33,14 @@ public class DeserializeAnimalsInfo {
                     animal.setMaxWeight(jsonAnimal.getMaxWeight());
                     animal.setMaxCount(jsonAnimal.getMaxCount());
                     animal.setStep(jsonAnimal.getStep());
-                    animal.setSatiety(jsonAnimal.getStep());
-//                    System.out.println(animal);
+                    animal.setSatiety(jsonAnimal.getSatiety());
+//                    System.out.println(animal + "\t" + animal.getLocation());
                 }
-
             }
         }
+
+        System.out.println("***** Reading from animaldata.json completed ****");
+        System.out.println();
     }
+
 }

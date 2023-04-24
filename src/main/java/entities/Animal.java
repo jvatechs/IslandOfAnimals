@@ -1,39 +1,199 @@
 package entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import island.Location;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
-@JsonIgnoreProperties({"location", "animals"})
+import static java.lang.Math.max;
+
+@JsonIgnoreProperties({"location", "animals", "currentCount", "animalOnTheLocation", "currentSatiety"
+                        , "isHungry", "isMoved"})
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 @JsonPropertyOrder({"@class", "maxWeight", "maxCount", "step", "satiety"})
 
-public abstract class Animal extends Entity{
+public abstract class Animal extends Entity implements Cloneable {
+    // main fields of every
     protected double maxWeight;
     protected int maxCount;
     protected int step;
-    protected int satiety;
+    protected double satiety;
 
-
-
-    protected Location location;
     private List<Animal> animals;
+    protected int currentCount;
+    protected double currentSatiety;
 
-//    public Animal() {
-//        this.typeName = this.getClass().getName();
+    // #ATOMIC Integer block with incrementAndGet method in constructor
+    protected Integer uniqueID;
+    protected static AtomicInteger idGenerator = new AtomicInteger(1);
+
+    // #STATIC ID manager block with increment in constructor
+    private static int maxId = 0;
+    private Integer id;
+
+    protected boolean isPredator = false;
+//    private final Random random = new Random();
+    //booleans should to set
+    //moved after every simulate must be "false"
+    //hungry is only eat
+    protected boolean isMoved = false;
+    protected boolean isHungry = true;
+    protected String simpleName = this.getClass().getSimpleName();
+
+
+
+    public Animal() {
+        this.uniqueID = idGenerator.incrementAndGet();
+        this.id = maxId;
+        maxId++;
+    }
+
+    //constructor for easy copying
+//    public Animal(Animal other) {
+//        this.id = maxId;
+//        maxId++;
+//        this.uniqueID = idGenerator.incrementAndGet();
+//
+//        this.maxWeight = other.maxWeight;
+//        this.maxCount = other.maxCount;
+//        this.step = other.step;
+//        this.satiety = other.satiety;
 //    }
 
 
+    public void eat(Entity eaten, Location currentLocation) {
+        if (eaten instanceof Animal) {
+            double currentWeight = ((Animal) eaten).getMaxWeight();
 
-    public abstract void eat(Object o);
+            HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap
+                    = currentLocation.getAnimalListPerNameMap();
+
+            ArrayList<Animal> eatenList = animalListPerNameMap.get(eaten.getClass());
+            int countOfTheEaten = eatenList.size();
+
+            //remove animal from the location if was eaten
+//            if (countOfTheEaten - 1 == 0) {
+////                animalOnTheLocMap.remove(eaten);
+//                animalListPerNameMap.remove(eaten.getClass());
+//                //or decrease the animal quantity if was more than 1
+//            } else {
+//                eatenList.remove(0);
+//                animalListPerNameMap.put((Class<? extends Animal>) eaten.getClass(), eatenList);
+//            }
+
+            eatenList.remove(0);
+            animalListPerNameMap.put((Class<? extends Animal>) eaten.getClass(), eatenList);
+
+            if (this.satiety < currentWeight) {
+                this.currentSatiety = this.satiety;
+            } else {
+                this.currentSatiety = currentWeight;
+            }
+
+        }         //if plants
+        else if (eaten instanceof Plants) {
+                Plants currentPlants = currentLocation.getPlants();
+                //stops if plants discontinue or the animal is not hungry
+                while (this.currentSatiety <= this.satiety && currentPlants.getCurrentCount() != 0) {
+                    int plantCount = currentPlants.getCurrentCount();
+                    currentPlants.setCurrentCount(plantCount - 1);
+                    this.currentSatiety += currentPlants.getMaxWeight();
+                }
+            }
+
+        this.isHungry = false;
+
+    }
+    @Deprecated
+    public void eat2(Entity eaten, Location currentLocation) {
+
+        //if animal
+        if (eaten instanceof Animal) {
+            double weightOfEaten = ((Animal) eaten).getMaxWeight();
+//            int current = ((Animal) eaten).location.getAnimalCurrentCount().get(eaten);
+            HashMap<Animal, Integer> animalOnTheLocMap = currentLocation.getAnimalOnTheLocMap();
+            int countOfTheEaten = animalOnTheLocMap.get(eaten);
+
+            //remove animal from the location if was eaten
+            if (countOfTheEaten - 1 == 0) {
+                animalOnTheLocMap.remove(eaten);
+                //or decrease the animal quantity if was more than 1
+            } else {
+                animalOnTheLocMap.put((Animal) eaten, countOfTheEaten - 1);
+            }
+            animals.remove(eaten);
+
+            if (this.satiety < weightOfEaten) {
+                this.currentSatiety = this.satiety;
+            } else {
+                this.currentSatiety = weightOfEaten;
+            }
+            //need think under do true after every move
+            this.isHungry = false;
+
+        }
+        //if plants
+        else {
+            if (eaten instanceof Plants) {
+                Plants currentPlants = currentLocation.getPlants();
+                //stops if plants discontinue or the animal is not hungry
+                while (this.currentSatiety <= this.satiety && currentPlants.getCurrentCount() != 0) {
+                    int plantCount = currentPlants.getCurrentCount();
+                    currentPlants.setCurrentCount(plantCount - 1);
+                    this.currentSatiety += currentPlants.getMaxWeight();
+                }
+            }
+        }
+    }
+
+    public void eatByAI(Entity eaten, Location currentLocation) {
+        if (eaten instanceof Animal) {
+            double currentWeight = ((Animal) eaten).getMaxWeight();
+
+            HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap
+                    = currentLocation.getAnimalListPerNameMap();
+
+            ArrayList<Animal> eatenList = animalListPerNameMap.get(eaten.getClass());
+            int countOfTheEaten = eatenList.size();
+
+            List<Animal> toBeRemoved = new ArrayList<>(); // create a new list to store animals to be removed
+            for (Animal animal : eatenList) {
+                toBeRemoved.add(animal); // add animals to the list
+                if (this.satiety < currentWeight) {
+                    this.currentSatiety = this.satiety;
+                } else {
+                    this.currentSatiety = currentWeight;
+                }
+            }
+
+            // remove the animals from the map
+            eatenList.removeAll(toBeRemoved);
+            if (eatenList.isEmpty()) {
+                animalListPerNameMap.remove(eaten.getClass());
+            }
+
+        } else if (eaten instanceof Plants) {
+            Plants currentPlants = currentLocation.getPlants();
+            //stops if plants discontinue or the animal is not hungry
+            while (this.currentSatiety <= this.satiety && currentPlants.getCurrentCount() != 0) {
+                int plantCount = currentPlants.getCurrentCount();
+                currentPlants.setCurrentCount(plantCount - 1);
+                this.currentSatiety += currentPlants.getMaxWeight();
+            }
+        }
+
+        this.isHungry = false;
+    }
 
 
-    public int reproduce(int currentCount) {
+    // #REPRODUCE BLOCK
+    public int reproduce(int currentCount, Location currentLocation) {
         int afterCount = currentCount;
         if (currentCount + 1 < maxCount) {
             afterCount = currentCount + 1;
@@ -41,36 +201,99 @@ public abstract class Animal extends Entity{
         return afterCount;
     }
 
+    // #DEAD BLOCK
+    public void dead(Animal animal, Location currentLocation) {
+//        if (currentSatiety <= 0) {
+//            System.out.println("The animal is dead...");
+//        }
+        HashMap<Class<? extends Animal>, ArrayList<Animal>> animalListPerNameMap
+                = currentLocation.getAnimalListPerNameMap();
+        ArrayList<Animal> animalList = animalListPerNameMap.get(animal.getClass());
 
-    public void directionChoose() {
-
-    }
-
-    public void dead() {
-        if (satiety <= 0) {
-            System.out.println("The animal is dead...");
+        if (animalList.size() - 1 == 0) {
+            animalListPerNameMap.remove(animal.getClass());
+        } else {
+            animalList.remove(animal);
+            animalListPerNameMap.put(animal.getClass(), animalList);
         }
+
     }
 
-    public void moveUp() {
-        int y = location.getY();
-        location.setY(Math.max(y - step, 0));
+    private void deadHelper(HashMap<Class<? extends Animal>, ArrayList<Animal>> map, Animal animal) {
+        ArrayList<Animal> animalList = map.get(animal.getClass());
+        if (animalList.size() - 1 == 0) {
+            map.remove(animal.getClass());
+        } else {
+            animalList.remove(animal);
+            map.put(animal.getClass(), animalList);
+        }
+
     }
 
-    public void moveDown() {
-        int y = location.getY();
-        location.setY(Math.min(y + step, location.getMaxY()));
+
+    // #MOVE BLOCK
+    public Location moveUp(Location currentLocation) {
+        int y = currentLocation.getY();
+        return locations[currentLocation.getX()][Math.max(y - 1, 0)];
     }
 
-    public void moveRight() {
-        int x = location.getX();
-        location.setX(Math.min(x + step, location.getMaxX()));
+    public Location moveDown(Location currentLocation) {
+        int y = currentLocation.getY();
+        return locations[currentLocation.getX()][Math.min(y + 1, currentLocation.getMaxY())];
     }
 
-    public void moveLeft() {
-        int x = location.getX();
-        location.setX(Math.max(x - step, 0));
+    public Location moveRight(Location currentLocation) {
+        int x = currentLocation.getX();
+        return locations[Math.min(x + 1, currentLocation.getMaxX())][currentLocation.getY()];
     }
+
+    public Location moveLeft(Location currentLocation) {
+        int x = currentLocation.getX();
+        return locations[Math.max(x - 1, 0)][currentLocation.getY()];
+    }
+
+    //the method is gag and will be deleted
+    @Deprecated
+    public Location
+    move(Location currentLocation) {
+        return null;
+    }
+
+    public Location move(Location currentLocation, int step) {
+        Random random = new Random();
+
+        if (step == 0) {
+            return null;
+        }
+
+        Location newLocation = null;
+
+        this.isMoved = false;
+        for (int i = 0; i < step; i++) {
+            int result = random.nextInt(4);
+
+            newLocation =  switch (result) {
+                case 0 -> moveUp(currentLocation);
+                case 1 -> moveDown(currentLocation);
+                case 2 -> moveLeft(currentLocation);
+                case 3 -> moveRight(currentLocation);
+                default -> throw new IllegalStateException("Unexpected value: " + result);
+            };
+            currentLocation = newLocation;
+        }
+        this.isMoved = true;
+
+        return newLocation;
+
+    }
+
+
+    //GETTERS AND SETTERS
+
+    public boolean getPredator() {
+        return isPredator;
+    }
+
 
     public double getMaxWeight() {
         return maxWeight;
@@ -96,28 +319,20 @@ public abstract class Animal extends Entity{
         this.step = step;
     }
 
-    public int getSatiety() {
+    public double getSatiety() {
         return satiety;
     }
 
-    public void setSatiety(int satiety) {
+    public void setSatiety(double satiety) {
         this.satiety = satiety;
     }
-//
-//    public String getTypeName() {
-//        return typeName;
-//    }
-//
-//    public void setTypeName(String typeName) {
-//        this.typeName = typeName;
-//    }
 
-    public Location getLocation() {
-        return location;
+    public int getCurrentCount() {
+        return currentCount;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setCurrentCount(int currentCount) {
+        this.currentCount = currentCount;
     }
 
     public List<Animal> getAnimals() {
@@ -128,21 +343,81 @@ public abstract class Animal extends Entity{
         this.animals = animals;
     }
 
+    public double getCurrentSatiety() {
+        return currentSatiety;
+    }
+
+    public void setCurrentSatiety(double currentSatiety) {
+        this.currentSatiety = currentSatiety;
+    }
+
+    public boolean getIsMoved() {
+        return isMoved;
+    }
+
+    public void setIsMoved(boolean moved) {
+        isMoved = moved;
+    }
+
+    public Integer getID() {
+        return uniqueID;
+    }
+
+    public void setID(Integer id) {
+        this.id = id;
+    }
+
+    public String getSimpleName() {
+        return simpleName;
+    }
+
+    public boolean getIsHungry() {
+        return isHungry;
+    }
+
+    public void setIsHungry(boolean hungry) {
+        isHungry = hungry;
+    }
+
     @Override
     public String toString() {
 
 //        maxWeight = Math.scalb(maxWeight, 2);
-        return String.format("%-11s %s %-6.2f %s %-4d %s %d %s %d", this.getClass().getSimpleName(),
-                "maxWeight=" , maxWeight,
-                ", maxCount=", maxCount,
-                ", step=", step,
-                ", satiety=", satiety);
+//        return String.format("%-11s %s %-6.2f %s %-4d  %s %-4d %s %d %s %-6.2f", this.getClass().getSimpleName(),
+        return this.getClass().getSimpleName()
+                + " id: " + this.id ;
+//                "maxWeight=" , maxWeight,
+//                ", maxCount=" + maxCount
+//                ", animalOnTheLocation = ", animalOnTheLocation
+//                + ", step=" + step;
+//                ", satiety=", satiety
+//        );
 
 
-//        return  this.getClass().getSimpleName() +
-//                "\t\t\t maxWeight=" + maxWeight +
-//                ", maxCount=" + maxCount +
-//                ", step=" + step +
-//                ", satiety=" + satiety;
+
     }
+
+    @Override
+    public Animal clone() {
+        try {
+            return (Animal) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Cloning not supported for class: " + this.getClass().getName(), e);
+        }
+    }
+
+
+//    @Override
+//    public Animal clone() {
+//        try {
+//            Animal clone = (Animal) super.clone();
+//            clone.id = maxId;
+//            maxId++;
+//            //I will try or AtomicInteger or old option
+//            clone.uniqueID = idGenerator.incrementAndGet();
+//            return clone;
+//        } catch (CloneNotSupportedException e) {
+//            throw new AssertionError();
+//        }
+//    }
 }

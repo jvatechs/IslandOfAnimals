@@ -1,0 +1,77 @@
+{
+  "animals.Herbivores.Mouse" : {
+    "entities.Plants" : 100,
+    "animals.Herbivores.Caterpillar" : 90
+  },
+  "animals.Predators.Boa" : {
+    "animals.Herbivores.Rabbit" : 20,
+    "animals.Herbivores.Mouse" : 40,
+    "animals.Herbivores.Duck" : 10,
+    "animals.Predators.Fox" : 15
+  },
+  "animals.Herbivores.Horse" : {
+    "entities.Plants" : 100
+  },
+  "animals.Herbivores.Sheep" : {
+    "entities.Plants" : 100
+  },
+  "animals.Herbivores.Goat" : {
+    "entities.Plants" : 100
+  },
+  "animals.Predators.Bear" : {
+    "animals.Herbivores.Boar" : 50,
+    "animals.Herbivores.Rabbit" : 80,
+    "animals.Herbivores.Mouse" : 90,
+    "animals.Predators.Boa" : 80,
+    "animals.Herbivores.Deer" : 80,
+    "animals.Herbivores.Horse" : 40,
+    "animals.Herbivores.Buffalo" : 20,
+    "animals.Herbivores.Sheep" : 70,
+    "animals.Herbivores.Goat" : 70,
+    "animals.Herbivores.Duck" : 10
+  },
+  "animals.Predators.Eagle" : {
+    "animals.Herbivores.Rabbit" : 90,
+    "animals.Herbivores.Mouse" : 90,
+    "animals.Herbivores.Duck" : 80,
+    "animals.Predators.Fox" : 10
+  },
+  "animals.Herbivores.Boar" : {
+    "animals.Herbivores.Mouse" : 50,
+    "entities.Plants" : 100,
+    "animals.Herbivores.Caterpillar" : 90
+  },
+  "animals.Herbivores.Rabbit" : {
+    "entities.Plants" : 100
+  },
+  "animals.Herbivores.Deer" : {
+    "entities.Plants" : 100
+  },
+  "animals.Predators.Wolf" : {
+    "animals.Herbivores.Boar" : 15,
+    "animals.Herbivores.Rabbit" : 60,
+    "animals.Herbivores.Mouse" : 80,
+    "animals.Herbivores.Deer" : 15,
+    "animals.Herbivores.Horse" : 10,
+    "animals.Herbivores.Buffalo" : 10,
+    "animals.Herbivores.Sheep" : 70,
+    "animals.Herbivores.Goat" : 60,
+    "animals.Herbivores.Duck" : 40
+  },
+  "animals.Herbivores.Buffalo" : {
+    "entities.Plants" : 100
+  },
+  "animals.Herbivores.Duck" : {
+    "entities.Plants" : 100,
+    "animals.Herbivores.Caterpillar" : 90
+  },
+  "animals.Herbivores.Caterpillar" : {
+    "entities.Plants" : 100
+  },
+  "animals.Predators.Fox" : {
+    "animals.Herbivores.Rabbit" : 70,
+    "animals.Herbivores.Mouse" : 90,
+    "animals.Herbivores.Duck" : 60,
+    "animals.Herbivores.Caterpillar" : 40
+  }
+}

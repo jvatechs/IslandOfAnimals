@@ -1,11 +1,11 @@
 package island;
 
 import entities.Animal;
+import populators.AnimalController;
 import populators.AnimalPopulator;
-import populators.AnimalsListCreator;
 import populators.PlantPopulator;
-import readers.CreateOwnJson;
 import readers.DeserializeAnimalsInfo;
+import readers.DeserializeProbability;
 
 
 import java.io.IOException;
@@ -14,35 +14,41 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        // SUCCESS! - creating island for set locations with randomly counted plants and animals
+
+
 
         CreateIsland island = new CreateIsland(10, 2);
-        PlantPopulator plantPopulator = new PlantPopulator();
-
-        AnimalsListCreator listCreator = new AnimalsListCreator();
-        List<? extends Animal> animals = listCreator.getAnimals();
 
         //setting data from JSON to each animal
-        new DeserializeAnimalsInfo().deserializeJSON(animals);
+        new DeserializeAnimalsInfo().deserializeJSON();
+        //create HashMap of probabilities from JSON
+        new DeserializeProbability().deserializeJSON();
+
+        //strictly must used after creating island
+        AnimalPopulator animalPopulator = new AnimalPopulator();
+        PlantPopulator plantPopulator = new PlantPopulator();
 
         //populate island randomly by animals
-        new AnimalPopulator().setAnimals(animals);
+        animalPopulator.setAnimals_ver2();
         plantPopulator.plantRandomize();
+
+        //print all locations
         island.printLocations();
+        island.printTotalAnimalsCount();
+
+        System.out.println("*".repeat(15) + "END OF DAY" + "*".repeat(15));
 
 
-//        List<? extends Animal> animals = animalPopulator.getAnimals();
-//        for (Animal animal : animals) {
-//            System.out.println(animal);
-//        }
+        //usage of controller methods
+        AnimalController animalController = new AnimalController();
+        animalController.eatControl_ver2();
+        animalController.moveControl_ver3();
+        animalController.reproduceControl();
+        plantPopulator.plantGrow();
 
-//        new CreateOwnJson().createJson();
-
-//        JsonFiller jsonFiller = new JsonFiller();
-
-//        CreateOwnJson createOwnJson = new CreateOwnJson();
-//        createOwnJson.createJson();
-
+        //print locations and animals after the 1st day
+        island.printLocations();
+        island.printTotalAnimalsCount();
 
     }
 }
