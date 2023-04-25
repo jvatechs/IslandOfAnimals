@@ -15,7 +15,7 @@ public class Main {
 
 
 
-        CreateIsland island = new CreateIsland(10, 2);
+        CreateIsland island = new CreateIsland(100, 20);
 
         //setting data from JSON to each animal
         new DeserializeAnimalsInfo().deserializeJSON();

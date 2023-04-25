@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 
 public class MainSimulation {
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, InterruptedException {
-        CreateIsland island = new CreateIsland(10, 2);
+        CreateIsland island = new CreateIsland(100, 20);
         PrintThread printThread = new PrintThread(island);
         int numberOfDays = 7;
         ExecutorService executorService = Executors.newSingleThreadExecutor();
