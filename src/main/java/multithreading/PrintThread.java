@@ -11,7 +11,8 @@ public class PrintThread implements Runnable{
 
     @Override
     public void run() {
-        island.printLocations();
+//        island.printLocations();
         island.printTotalAnimalsCount();
+        island.printTotalPlantsCount();
     }
 }

@@ -1,4 +1,4 @@
-package populators;
+package service.populators_and_controllers;
 
 import entities.Plants;
 import island.Location;
