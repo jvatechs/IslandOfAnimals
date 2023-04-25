@@ -1,4 +1,4 @@
-package json_creators;
+package service.json_creators;
 
 import animals.Herbivores.*;
 import animals.Predators.*;
@@ -13,6 +13,20 @@ import java.util.HashMap;
 
 public class EatProbabilityJSONCreator {
     public static void main(String[] args) throws IOException {
+        HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> map
+                = new EatProbabilityJSONCreator().returnMap();
+
+        String pathname = "src/main/java/service/json_creators/animal_probability.json";
+        ObjectMapper mapper = new ObjectMapper();
+
+        try(JsonGenerator generator = mapper.getFactory().createGenerator(new FileOutputStream(pathname))) {
+            generator.useDefaultPrettyPrinter();
+            mapper.writeValue(generator, map);
+        }
+
+    }
+
+    private HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>>  returnMap() {
         HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> map
                 = new HashMap<>();
 
@@ -127,24 +141,6 @@ public class EatProbabilityJSONCreator {
         caterpillarMap.put(plants, 100);
         map.put(caterpillar, caterpillarMap);
 
-
-
-        //serialize
-        String pathname = "src/main/java/json_creators/animal_probability.json";
-        ObjectMapper mapper = new ObjectMapper();
-
-        try(JsonGenerator generator = mapper.getFactory().createGenerator(new FileOutputStream(pathname))) {
-            generator.useDefaultPrettyPrinter();
-            mapper.writeValue(generator, map);
-        }
-
-//        mapper.writeValue(new File(pathname), map);
-
-        //deserialize
-//        HashMap<Class<? extends Animal>, HashMap<Class<? extends Entity>, Integer>> hashMap =
-//                mapper.readValue(new BufferedInputStream(new FileInputStream(pathname)),
-//                        HashMap.class);
-//        System.out.println(hashMap);
-
+        return map;
     }
 }

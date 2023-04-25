@@ -1,6 +1,5 @@
-package readers;
+package service.json_readers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
 import island.CreateIsland;
 

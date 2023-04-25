@@ -1,7 +1,7 @@
 package multithreading;
 
-import populators.AnimalPopulator;
-import populators.PlantPopulator;
+import service.populators_and_controllers.AnimalPopulator;
+import service.populators_and_controllers.PlantPopulator;
 
 import java.lang.reflect.InvocationTargetException;
 

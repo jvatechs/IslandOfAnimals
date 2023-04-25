@@ -1,4 +1,4 @@
-package populators;
+package service.populators_and_controllers;
 
 import animals.Herbivores.*;
 import animals.Predators.*;

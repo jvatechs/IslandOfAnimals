@@ -1,7 +1,6 @@
-package readers;
+package service.json_readers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
 import entities.Entity;
 

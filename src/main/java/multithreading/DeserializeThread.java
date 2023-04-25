@@ -1,7 +1,7 @@
 package multithreading;
 
-import readers.DeserializeAnimalsInfo;
-import readers.DeserializeProbability;
+import service.json_readers.DeserializeAnimalsInfo;
+import service.json_readers.DeserializeProbability;
 
 import java.io.IOException;
 
