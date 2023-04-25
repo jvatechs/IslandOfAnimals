@@ -1,6 +1,5 @@
 package animals.Predators;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import entities.Predator;
 
 

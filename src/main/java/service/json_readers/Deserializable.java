@@ -1,4 +1,4 @@
-package readers;
+package service.json_readers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

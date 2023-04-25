@@ -1,4 +1,4 @@
-package populators;
+package service.populators_and_controllers;
 
 import entities.Animal;
 import island.CreateIsland;
@@ -29,7 +29,7 @@ public class AnimalPopulator extends ControllerCommon {
                     currentAnimalType.setCurrentCount(random.nextInt(1, currentAnimalType.getMaxCount() + 1));
                     int currentCount = currentAnimalType.getCurrentCount();
                     // #TEST TOOLS
-//                    int currentCount = 1;
+//                    int currentCount = 2;
 
                     //grabbing all the animal of the Class of animals new instances into list
                     for (int i = 0; i < currentCount; i++) {
@@ -38,7 +38,6 @@ public class AnimalPopulator extends ControllerCommon {
 
                     animalListPerNameMap.put(currentClass, currentAnimalTypeObjects);
                 }
-//                currentLoc.createMapOfCount();
             }
         }
     }

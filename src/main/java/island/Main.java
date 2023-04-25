@@ -1,19 +1,17 @@
 package island;
 
-import entities.Animal;
-import populators.AnimalController;
-import populators.AnimalPopulator;
-import populators.PlantPopulator;
-import readers.DeserializeAnimalsInfo;
-import readers.DeserializeProbability;
+import service.populators_and_controllers.AnimalController;
+import service.populators_and_controllers.AnimalPopulator;
+import service.populators_and_controllers.PlantPopulator;
+import service.json_readers.DeserializeAnimalsInfo;
+import service.json_readers.DeserializeProbability;
 
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static void main(String[] args) throws IOException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, InterruptedException {
 
 
 
@@ -35,6 +33,7 @@ public class Main {
         //print all locations
         island.printLocations();
         island.printTotalAnimalsCount();
+        island.printTotalPlantsCount();
 
         System.out.println("*".repeat(15) + "END OF DAY" + "*".repeat(15));
 
@@ -47,8 +46,9 @@ public class Main {
         plantPopulator.plantGrow();
 
         //print locations and animals after the 1st day
-        island.printLocations();
+//        island.printLocations();
         island.printTotalAnimalsCount();
+        island.printTotalPlantsCount();
 
     }
 }

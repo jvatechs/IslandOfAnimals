@@ -1,10 +1,10 @@
-package json_creators;
+package service.json_creators;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Animal;
-import populators.AnimalsListCreator;
+import service.populators_and_controllers.AnimalsListCreator;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,14 +22,9 @@ public class AnimalsDataJSONCreator {
 
         //serialize #1
         ObjectMapper mapper = new ObjectMapper();
-        String pathname = "src/main/java/json_creators/animaldata.json";
+        String pathname = "src/main/java/service/json_creators/animaldata.json";
 
         JavaType plType = mapper.getTypeFactory().constructCollectionLikeType(List.class, Animal.class);
-
-        //serialize #2
-//        String s = mapper.writerFor(plType).writeValueAsString(animalsOther);
-//        mapper.writerFor(plType).writeValue(new File(pathname), animalsOther);
-//        System.out.println(s);
 
 //        generator for increase readability
         try (JsonGenerator generator = mapper.getFactory().createGenerator(new FileOutputStream(pathname))) {
