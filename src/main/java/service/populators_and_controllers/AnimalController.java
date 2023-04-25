@@ -80,6 +80,10 @@ public class AnimalController extends ControllerCommon {
                         HashMap<Class<? extends Animal>, ArrayList<Animal>> newAnimalListPerNameMap = newLocation.getAnimalListPerNameMap();
 
                         if (newLocation.equals(currentLoc)) continue;
+
+                        if (newAnimalListPerNameMap.get(animalClass) != null) {
+                            if (newAnimalListPerNameMap.get(animalClass).size() == animalInList.getMaxCount()) continue;
+                        }
                         addToNewLocation(newAnimalListPerNameMap, animalClass, animalInList);
                         removeFromOldLocation(list, animalInList, animalClass, currAnimalListPerNameMap);
                         //# TEST TOOLS
