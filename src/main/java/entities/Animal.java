@@ -154,17 +154,8 @@ public abstract class Animal extends Entity {
 
     @Override
     public String toString() {
-
-//        maxWeight = Math.scalb(maxWeight, 2);
-//        return String.format("%-11s %s %-6.2f %s %-4d  %s %-4d %s %d %s %-6.2f", this.getClass().getSimpleName(),
         return this.getClass().getSimpleName()
                 + " id: " + this.uniqueID ;
-//                "maxWeight=" , maxWeight,
-//                ", maxCount=" + maxCount
-//                ", animalOnTheLocation = ", animalOnTheLocation
-//                + ", step=" + step;
-//                ", satiety=", satiety
-//        );
     }
 
 }
