@@ -21,7 +21,7 @@ public class PlantPopulator extends ControllerCommon {
         for (Location[] location : locations) {
             for (Location currentLoc : location) {
                 if (currentLoc.getPlants() == null) {
-                    randomGrass(currentLoc, 50);
+                    randomGrass(currentLoc, 150);
 //                    System.out.println("Count after grow: " + currentLoc.getPlants().getCurrentCount());
                 } else {
                     int currentCount = currentLoc.getPlants().getCurrentCount();
