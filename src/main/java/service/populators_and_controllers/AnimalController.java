@@ -35,8 +35,9 @@ public class AnimalController extends ControllerCommon {
 
                     for (Animal animalObject : copyAnimalsList) {
 
-                        if (!animalObject.canEatAnimalsOrNot()) continue;
-                        eatAnimal(animalListPerNameMap, probabilities, animalObject);
+                        if (animalObject.canEatAnimalsOrNot()) {
+                            eatAnimal(animalListPerNameMap, probabilities, animalObject);
+                        }
                         eatPlants(animalObject, currentLoc);
                         decreaseSatiety(animalObject);
                         deadControl(animalObject, currentLoc);
@@ -77,9 +78,9 @@ public class AnimalController extends ControllerCommon {
                         if (animalInList.getIsMoved()) continue;
 
                         newLocation = animalInList.move(currentLoc, step);
-                        HashMap<Class<? extends Animal>, ArrayList<Animal>> newAnimalListPerNameMap = newLocation.getAnimalListPerNameMap();
-
                         if (newLocation.equals(currentLoc)) continue;
+
+                        HashMap<Class<? extends Animal>, ArrayList<Animal>> newAnimalListPerNameMap = newLocation.getAnimalListPerNameMap();
 
                         if (newAnimalListPerNameMap.get(animalClass) != null) {
                             if (newAnimalListPerNameMap.get(animalClass).size() == animalInList.getMaxCount()) continue;
@@ -179,6 +180,7 @@ public class AnimalController extends ControllerCommon {
                     double eatenWeight = eatenAnimal.getMaxWeight();
                     animalListPerNameMap.put(eaten, eatenList);
                     animalObject.setCurrentSatiety(Math.min(animalObject.getSatiety(), eatenWeight));
+                    animalObject.setIsHungry(false);
                 }
             }
         });
@@ -191,6 +193,7 @@ public class AnimalController extends ControllerCommon {
                 int plantCount = currentPlants.getCurrentCount();
                 currentPlants.setCurrentCount(plantCount - 1);
                 animalObject.setCurrentSatiety(animalObject.getCurrentSatiety() + currentPlants.getMaxWeight());
+                animalObject.setIsHungry(false);
             }
         }
     }
