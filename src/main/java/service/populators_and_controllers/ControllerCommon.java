@@ -13,16 +13,6 @@ public abstract class ControllerCommon {
     protected Location[][] locations = CreateIsland.island;
 
 
-
-
-    protected void putInHashMapAnimal(HashMap<Animal, Integer> map, Animal animal) {
-        if(!map.containsKey(animal)) {
-            map.put(animal, 1);
-        } else {
-            map.put(animal, map.get(animal) + 1);
-        }
-    }
-
     protected Animal newAnimalObjectCreate(Animal example, Class<? extends Animal> currentClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Animal newAnimal = currentClass.getDeclaredConstructor().newInstance();
         newAnimal.setMaxWeight(example.getMaxWeight());

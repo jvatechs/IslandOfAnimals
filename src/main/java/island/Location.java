@@ -41,7 +41,7 @@ public class Location {
         animals = new ArrayList<>();
 //        animalCurrentCountMap = new HashMap<>();
         animalOnTheLocationMap = new HashMap<>();
-        animalListPerNameMap = new HashMap<Class<? extends Animal>, ArrayList<Animal>>();
+        animalListPerNameMap = new HashMap<>();
     }
 
     public int getMaxX() {

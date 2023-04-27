@@ -43,6 +43,7 @@ public class Main {
         AnimalController animalController = new AnimalController();
         animalController.eatControl_ver2();
         animalController.moveControl_ver3();
+
         animalController.reproduceControl();
         plantPopulator.plantGrow();
 
