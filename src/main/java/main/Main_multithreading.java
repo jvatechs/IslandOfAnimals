@@ -27,7 +27,7 @@ public class Main_multithreading {
         executorService.submit(new IslandSetterThread(animalPopulator, plantPopulator));
         executorService.submit(printThread);
 
-        // the last two threads we need do depends by how much days we want see changes
+        // the last two threads we need do depends on how many days we want see changes
 
         for (int i = 0; i < numberOfDays; i++) {
 
