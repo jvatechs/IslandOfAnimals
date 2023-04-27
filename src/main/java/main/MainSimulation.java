@@ -1,6 +1,10 @@
-package multithreading;
+package main;
 
 import island.CreateIsland;
+import multithreading.DayActionsThread;
+import multithreading.DeserializeThread;
+import multithreading.IslandSetterThread;
+import multithreading.PrintThread;
 import service.populators_and_controllers.AnimalPopulator;
 import service.populators_and_controllers.PlantPopulator;
 

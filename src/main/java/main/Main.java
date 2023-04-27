@@ -1,5 +1,6 @@
-package island;
+package main;
 
+import island.CreateIsland;
 import service.populators_and_controllers.AnimalController;
 import service.populators_and_controllers.AnimalPopulator;
 import service.populators_and_controllers.PlantPopulator;
