@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.*;
 
-public class MainSimulation {
+public class Main_multithreading {
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException, InterruptedException {
         CreateIsland island = new CreateIsland(100, 20);
         PrintThread printThread = new PrintThread(island);
