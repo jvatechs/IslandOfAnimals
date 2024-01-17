@@ -14,8 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 public class Main {
     public static void main(String[] args) throws IOException, NoSuchFieldException, ClassNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException, InterruptedException {
 
-
-
         CreateIsland island = new CreateIsland(100, 20);
 
         //setting data from JSON to each animal
